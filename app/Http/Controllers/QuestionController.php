@@ -6,6 +6,7 @@ use App\Http\Resources\QuestionResource;
 use App\Model\Question;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 
 /**
@@ -35,7 +36,6 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-//        auth()->user()->question()->create($request->all());
         Question::create($request->all());
         return response('Created!',Response::HTTP_CREATED);
     }
@@ -43,14 +43,27 @@ class QuestionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  App\Model\Question $question
+     * @param  string $slugOrId
      *
      * @return \App\Http\Resources\QuestionResource|\Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slugOrId)
     {
-        $question = Question::find($id);
-        return new QuestionResource($question);
+        $id = '';
+        $slug = '';
+
+        //Make decision its slug or id
+        (strlen($slugOrId) <= 5) ? $id = $slugOrId : $slug = $slugOrId;
+
+        //Using one of two method for finding right model
+        $question = ($id) ? Question::find($id) : Question::where('slug', $slug)->first();
+
+        //Checking if it returning good data
+        if ($question instanceof Question) {
+            return new QuestionResource($question);
+        }
+
+        return response('Bad request', Response::HTTP_BAD_REQUEST);
     }
 
 
@@ -61,20 +74,48 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slugOrId)
     {
-        //
+        $id = '';
+        $slug = '';
+
+        //Make decision its slug or id
+        (strlen($slugOrId) <= 5) ? $id = $slugOrId : $slug = $slugOrId;
+
+        //Using one of two method for finding right model
+        $question = ($id) ? Question::find($id) : Question::where('slug', $slug)->first();
+
+        //Checking if it returning good data
+        if ($question instanceof Question) {
+            $question->update($request->all());
+            return response('OK', Response::HTTP_ACCEPTED);
+        }
+
+        return response('Bad request', Response::HTTP_BAD_REQUEST);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  App\Model\Question $question
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slugOrId)
     {
-        Question::find($id)->delete();
-        return response('Deleted',Response::HTTP_NO_CONTENT);
+        $id = '';
+        $slug = '';
+
+        //Make decision its slug or id
+        (strlen($slugOrId) <= 5) ? $id = $slugOrId : $slug = $slugOrId;
+
+        //Using one of two method for finding right model
+        $question = ($id) ? Question::find($id) : Question::where('slug', $slug)->first();
+
+        //Checking if it returning good data
+        if ($question instanceof Question) {
+            $question->delete();
+            return response('Deleted',Response::HTTP_NO_CONTENT);
+        }
+
+        return response('Bad request', Response::HTTP_BAD_REQUEST);
     }
 }
