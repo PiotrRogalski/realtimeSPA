@@ -17,4 +17,9 @@ class Category extends Model
     {
         return $this->hasMany(Question::class);
     }
+
+    public function getPathAttribute()
+    {
+        return asset("api/category/$this->slug");
+    }
 }

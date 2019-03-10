@@ -13,11 +13,13 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
-        return Category::latest()->get();
+        return CategoryResource::collection(
+            Category::latest()->get()
+        );
     }
 
     /**
@@ -38,13 +40,13 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  string $slugOrId
+     * @param  string $category
      *
-     * @return \App\Http\Resources\CategoryResource|\Illuminate\Http\Response
+     * @return \App\Http\Resources\CategoryResource
      */
     public function show(Category $category)
     {
-        return $category;
+        return new CategoryResource($category);
     }
 
 
@@ -52,7 +54,7 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Category  $category
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Category $category)
@@ -70,6 +72,7 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param  Category $category
      * @return \Illuminate\Http\Response
      */
     public function destroy(Category $category)
