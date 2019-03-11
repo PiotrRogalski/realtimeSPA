@@ -4,6 +4,7 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use App\User;
+use Illuminate\Support\Str;
 
 class Question extends Model
 {
@@ -43,5 +44,10 @@ class Question extends Model
     {
         return count($this->replies);
     }
+
+//    public function setSlugAttribute()
+//    {
+//        $this->attributes['slug'] = Str::slug($this->attributes['title']);
+//    }
 
 }

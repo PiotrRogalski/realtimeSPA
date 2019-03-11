@@ -10,6 +10,16 @@ use App\Http\Resources\CategoryResource;
 
 class CategoryController extends Controller
 {
+
+    /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
+    public function __construct() {
+        $this->middleware('jwt', ['except' => ['inedx', 'show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *

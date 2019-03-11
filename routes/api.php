@@ -18,4 +18,5 @@ Route::group([
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
     Route::post('payload', 'AuthController@payLoad');
+    Route::post('signup', 'AuthController@signup');
 });

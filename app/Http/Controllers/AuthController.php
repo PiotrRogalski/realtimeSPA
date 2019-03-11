@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
+use App\User;
+//use Illuminate\Support\Facades\Auth;
+//use App\Http\Controllers\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class AuthController extends Controller
 {
@@ -13,7 +15,13 @@ class AuthController extends Controller
      * @return void
      */
     public function __construct() {
-        $this->middleware('jwt', ['except' => ['login']]);
+        $this->middleware('jwt', ['except' => ['login', 'signup']]);
+    }
+    
+    public function signup(Request $request)
+    {
+        User::create($request->all());
+        return $this->login($request);
     }
 
     /**
