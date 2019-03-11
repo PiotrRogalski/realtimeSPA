@@ -39,4 +39,9 @@ class Question extends Model
         return asset("api/question/$this->slug");
     }
 
+    public function getRepliesNumber(): int
+    {
+        return count($this->replies);
+    }
+
 }

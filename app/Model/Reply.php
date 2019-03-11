@@ -28,4 +28,5 @@ class Reply extends Model
     {
         return asset("api/question/".$this->question->slug."/reply/".$this->id);
     }
+
 }

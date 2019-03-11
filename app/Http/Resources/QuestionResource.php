@@ -20,7 +20,7 @@ class QuestionResource extends JsonResource
             'slug' => $this->slug,
             'path' => $this->path,
             'body' => $this->body,
-            'replies' => count($this->replies),
+            'replies' => $this->getRepliesNumber(),
             'created_at' => $this->created_at->diffForHumans(),
             'user' => $this->user->name
         ];
