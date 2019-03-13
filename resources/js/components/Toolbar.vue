@@ -4,25 +4,35 @@
     <v-toolbar-title>Bitfumes</v-toolbar-title>
     <v-spacer></v-spacer>
     <div class="hidden-sm-and-down">
-      <router-link to="/forum">
-        <v-btn flat>Forum</v-btn>
+
+      <router-link v-for="button in navbarButtons"
+                   :key="button.text"
+                   :to="button.to"
+                   v-if="button.show">
+        <v-btn flat>{{ button.text }}</v-btn>
       </router-link>
-      <router-link to="/">
-        <v-btn flat>Ask Question</v-btn>
-      </router-link>
-      <router-link to="/">
-        <v-btn flat>Category</v-btn>
-      </router-link>
-      <router-link to="/login">
-        <v-btn flat>Login</v-btn>
-      </router-link>
+
     </div>
   </v-toolbar>
 </template>
 
 <script>
     export default {
-        mounted() {
-        }
+        data() {
+            return {
+                navbarButtons: [
+                    {text: 'Forum', to: '/forum', show: true},
+                    {text: 'Ask Question', to: '/ask', show: User.isLogged()},
+                    {text: 'Category', to: '/category', show: User.isLogged()},
+                    {text: 'Logout', to: '/logout', show: User.isLogged()},
+                    {text: 'Login', to: '/login', show: !User.isLogged()},
+                ],
+            }
+        },
+        created() {
+            EventBus.$on('logout', () => {
+                User.logout();
+            })
+        },
     }
 </script>

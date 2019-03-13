@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SignupRequest;
 use App\User;
-//use Illuminate\Support\Facades\Auth;
-//use App\Http\Controllers\Controller;
-use Symfony\Component\HttpFoundation\Request;
 
 class AuthController extends Controller
 {
@@ -18,9 +16,14 @@ class AuthController extends Controller
         $this->middleware('jwt', ['except' => ['login', 'signup']]);
     }
     
-    public function signup(Request $request)
+    public function signup(SignupRequest $request)
     {
-        User::create($request->all());
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $request->password;
+        $user->save();
+
         return $this->login($request);
     }
 
