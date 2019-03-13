@@ -8,40 +8,43 @@ use Illuminate\Support\Str;
 
 class Question extends Model
 {
-    protected  $guarded = ['id'];
+    protected static function boot() {
+        parent::boot();
+
+        static::creating(function ($question) {
+            $question->slug = Str::slug($question->title);
+        });
+    }
+
+
+    protected $guarded = ['id'];
 
     /**
      * Get the route key for the model.
      *
      * @return string
      */
-    public function getRouteKeyName(): string
-    {
+    public function getRouteKeyName(): string {
         return 'slug';
     }
-    
-    public function category()
-    {
+
+    public function category() {
         return $this->belongsTo(Category::class);
     }
 
-    public function user()
-    {
+    public function user() {
         return $this->belongsTo(User::class);
     }
 
-    public function replies()
-    {
+    public function replies() {
         return $this->hasMany(Reply::class);
     }
 
-    public function getPathAttribute()
-    {
-        return asset("api/question/$this->slug");
+    public function getPathAttribute() {
+        return "question/$this->slug";
     }
 
-    public function getRepliesNumber(): int
-    {
+    public function getRepliesNumber(): int {
         return count($this->replies);
     }
 
@@ -49,5 +52,6 @@ class Question extends Model
 //    {
 //        $this->attributes['slug'] = Str::slug($this->attributes['title']);
 //    }
+
 
 }

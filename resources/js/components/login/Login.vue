@@ -49,7 +49,6 @@
         methods: {
             login() {
                 window.User.login(this.form)
-                // this.$router.push({name: 'forum'})
             }
         }
     }
