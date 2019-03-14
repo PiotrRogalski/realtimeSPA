@@ -19,6 +19,8 @@ class Question extends Model
 
     protected $fillable = ['title','slug','body','category_id','user_id'];
 
+    //load question with replies
+    protected $with = ['replies'];
 
     /**
      * Get the route key for the model.
@@ -38,7 +40,7 @@ class Question extends Model
     }
 
     public function replies() {
-        return $this->hasMany(Reply::class);
+        return $this->hasMany(Reply::class)->latest();
     }
 
     public function getPathAttribute() {

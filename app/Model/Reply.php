@@ -9,6 +9,14 @@ class Reply extends Model
 {
     protected $guarded = ['id'];
 
+    protected static function boot() {
+        parent::boot();
+
+        static::creating(function($reply) {
+           $reply->user_id = auth()->id();
+        });
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

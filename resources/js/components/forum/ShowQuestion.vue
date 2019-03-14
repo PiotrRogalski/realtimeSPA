@@ -1,6 +1,5 @@
 <template>
   <v-card>
-
     <v-card-title primary-title>
       <div>
         <h3 class="headline mb-0">
@@ -11,7 +10,7 @@
         </div>
       </div>
       <v-spacer></v-spacer>
-        <v-btn color="teal">Replies: {{ data.replies }}</v-btn>
+        <v-btn color="teal" dark>Replies: {{ data.replies_number }}</v-btn>
     </v-card-title>
 
     <v-card-text v-html="body"></v-card-text>

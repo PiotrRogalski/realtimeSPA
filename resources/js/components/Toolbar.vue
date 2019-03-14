@@ -23,7 +23,7 @@
                 navbarButtons: [
                     {text: 'Forum', to: '/forum', show: true},
                     {text: 'Ask Question', to: '/ask', show: User.isLogged()},
-                    {text: 'Category', to: '/category', show: User.isLogged()},
+                    {text: 'Category', to: '/category', show: User.admin()},
                     {text: 'Logout', to: '/logout', show: User.isLogged()},
                     {text: 'Login', to: '/login', show: !User.isLogged()},
                 ],

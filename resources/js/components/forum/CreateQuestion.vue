@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <form @submit.prevent="create">
+    <v-form @submit.prevent="create">
       <v-text-field
           label="Title"
           v-model="form.title"
@@ -24,7 +24,7 @@
       >Create
       </v-btn>
 
-    </form>
+    </v-form>
   </v-container>
 </template>
 

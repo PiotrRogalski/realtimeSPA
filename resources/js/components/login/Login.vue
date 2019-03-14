@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <form @submit.prevent="login">
+    <v-form @submit.prevent="login">
       <v-text-field
           label="E-mail"
           v-model="form.email"
@@ -25,7 +25,7 @@
         <v-btn color="blue">Sign Up</v-btn>
       </router-link>
 
-    </form>
+    </v-form>
   </v-container>
 </template>
 

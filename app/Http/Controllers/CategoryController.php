@@ -44,7 +44,7 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->slug = Str::slug($request->name);
         $category->save();
-        return response('Created!', Response::HTTP_CREATED);
+        return response($category, Response::HTTP_CREATED);
     }
 
     /**
@@ -88,6 +88,6 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        return response('Deleted', Response::HTTP_NO_CONTENT);
+        return response('deleted', Response::HTTP_NO_CONTENT);
     }
 }
