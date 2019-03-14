@@ -14,12 +14,40 @@
         <v-btn color="teal">Replies: {{ data.replies }}</v-btn>
     </v-card-title>
 
-    <v-card-text>{{ data.body }}</v-card-text>
+    <v-card-text v-html="body"></v-card-text>
+    <v-card-actions v-if="own">
+      <v-btn icon small @click="edit">
+        <v-icon color="orange">edit</v-icon>
+      </v-btn>
+      <v-btn icon small @click="destroy">
+        <v-icon color="red">delete</v-icon>
+      </v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 
 <script>
     export default {
-        props: ['data']
+        props: ['data'],
+        data(){
+            return {
+                own: User.own(this.data.user_id)
+            }
+        },
+        computed: {
+            body(){
+                return md.parse(this.data.body);
+            }
+        },
+        methods: {
+            destroy() {
+                axios.delete(`/api/question/${this.data.slug}`)
+                    .then(res => this.$router.push('/forum'))
+                    .catch(error => console.log(error.response.data))
+            },
+            edit() {
+                EventBus.$emit('startEditing')
+            },
+        }
     }
 </script>

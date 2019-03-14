@@ -51,6 +51,11 @@ class User {
         return false;
     }
 
+    //checking if the id is equal to logged user
+    own(id) {
+       return this.id() === id;
+    }
+
 }
 
 export default User = new User();

@@ -17,7 +17,8 @@ class Question extends Model
     }
 
 
-    protected $guarded = ['id'];
+    protected $fillable = ['title','slug','body','category_id','user_id'];
+
 
     /**
      * Get the route key for the model.
