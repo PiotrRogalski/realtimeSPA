@@ -3,6 +3,7 @@
     <!--<v-toolbar-side-icon></v-toolbar-side-icon>-->
     <v-toolbar-title>Bitfumes</v-toolbar-title>
     <v-spacer></v-spacer>
+    <app-notification v-if="isLogged"></app-notification>
     <div class="hidden-sm-and-down">
 
       <router-link v-for="button in navbarButtons"
@@ -17,7 +18,9 @@
 </template>
 
 <script>
+  import AppNotification from './AppNotification'
     export default {
+        components: {AppNotification},
         data() {
             return {
                 navbarButtons: [
@@ -27,6 +30,7 @@
                     {text: 'Logout', to: '/logout', show: User.isLogged()},
                     {text: 'Login', to: '/login', show: !User.isLogged()},
                 ],
+                isLogged: User.isLogged(),
             }
         },
         created() {
